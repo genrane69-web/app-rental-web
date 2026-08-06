@@ -19,9 +19,21 @@ WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxAmkZZQvY-Y2mK8LVvYH7TFQ
 # -----------------------------------------------------------------------------
 st.markdown("""
     <style>
-        /* บังคับสีข้อความหัวข้อทั้งหมดให้เป็นสีดำเข้ม */
-    h1, h2, h3, [data-testid="stHeadingWithTitleContent"] {
+            /* 1. บังคับสีตัวหนังสือหัวข้อคำถาม FAQ (st.expander) ให้เป็นสีเข้ม */
+    [data-testid="stExpander"] summary * {
         color: #0F172A !important;
+        font-weight: 600 !important;
+    }
+
+    /* 2. บังคับสีข้อความภายในกล่องคำตอบ FAQ เวลาเปิดอ่าน */
+    [data-testid="stExpander"] div {
+        color: #334155 !important;
+    }
+
+    /* 3. บังคับสีตัวหนังสือป้ายชื่อช่องกรอกข้อมูลในฟอร์ม (Form Labels) ให้ชัดเจน */
+    [data-testid="stWidgetLabel"] p, label {
+        color: #0F172A !important;
+        font-weight: 600 !important;
     }
 
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
