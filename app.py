@@ -6,7 +6,7 @@ import requests
 # -----------------------------------------------------------------------------
 st.set_page_config(
     page_title="AppRental - ระบบเว็บแอปสำหรับธุรกิจ",
-    page_icon="🚀",
+    page_icon="🪄",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
@@ -531,8 +531,6 @@ with r2:
             <div style="font-size: 0.8rem; color: #64748B;">ผู้บริหาร Apartment Zebing</div>
         </div>
     """, unsafe_allow_html=True)
-
-st.markdown("<br><br>", unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
 # 10. FAQ SECTION
