@@ -416,7 +416,7 @@ with c_pos:
             <div class="feature-item"><span class="check-icon">✓</span> ดึงข้อมูลเข้า Google Sheets ได้ทันที</div>
         </div>
     """, unsafe_allow_html=True)
-    st.button("เลือกแพ็กเกจ POS", key="select_pos")
+    st.button("ทดลองใช้งาน POS", key="select_pos")
 
 with c_dorm:
     st.markdown("""
@@ -434,7 +434,7 @@ with c_dorm:
             <div class="feature-item"><span class="check-icon">✓</span> สรุปรายงานการจ่ายเงินประจำเดือน</div>
         </div>
     """, unsafe_allow_html=True)
-    st.button("เลือกแพ็กเกจ Apartment", key="select_dorm")
+    st.button("ทดลองใช้งาน Apartment", key="select_dorm")
 
 # -----------------------------------------------------------------------------
 # 8. FEATURES GRID
