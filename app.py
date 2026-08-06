@@ -475,8 +475,6 @@ with f3:
         </div>
     """, unsafe_allow_html=True)
 
-st.markdown("<br><br>", unsafe_allow_html=True)
-
 # -----------------------------------------------------------------------------
 # 9. TESTIMONIALS
 # -----------------------------------------------------------------------------
@@ -577,7 +575,7 @@ st.markdown("""
             บริการให้เช่าระบบเว็บแอปสำหรับธุรกิจ
         </div>
         <div>
-            Facebook • LINE • Email<br>
+            • LINE @222utxsg
             ©2026 AppRental. All rights reserved.
         </div>
     </div>
