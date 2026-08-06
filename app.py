@@ -250,6 +250,54 @@ st.markdown("""
         color: #64748B;
         font-size: 0.875rem;
     }
+        /* ==================================================
+       ตั้งค่า responsive สำหรับจอมือถือและแท็บเล็ต (<= 768px)
+       ================================================== */
+    @media (max-width: 768px) {
+        /* 1. ลดระยะขอบรอบเว็บให้มีพื้นที่อ่านเนื้อหามากขึ้น */
+        .block-container {
+            padding-left: 0.75rem !important;
+            padding-right: 0.75rem !important;
+        }
+
+        /* 2. ซ่อนเมนูลิงก์ navbar ยาวๆ ไม่ให้ล้นจอมือถือ */
+        .navbar-menu {
+            display: none !important;
+        }
+
+        /* 3. ย่อขนาดส่วน Hero Section และตัวหนังสือ */
+        .hero-container {
+            padding: 36px 16px !important;
+            border-radius: 20px !important;
+        }
+        .hero-title {
+            font-size: 1.75rem !important;
+            line-height: 1.25 !important;
+        }
+        .hero-subtitle {
+            font-size: 0.95rem !important;
+        }
+
+        /* 4. ปรับขนาดการ์ดและฟอร์มกรอกข้อมูลให้กะทัดรัด */
+        .saas-card, .review-card, [data-testid="stForm"] {
+            padding: 20px !important;
+            border-radius: 16px !important;
+        }
+
+        /* 5. ปรับส่วนโลโก้ลูกค้าให้ตัดขึ้นบรรทัดใหม่เมื่อจอลอยแน่น */
+        .logo-bar {
+            gap: 16px !important;
+            font-size: 0.9rem !important;
+            flex-wrap: wrap !important;
+        }
+
+        /* 6. ปรับ Footer ด้านล่างสุดให้เรียงเป็นแนวตั้งแทนแนวนอน */
+        .footer-container {
+            flex-direction: column !important;
+            gap: 16px !important;
+            text-align: center !important;
+        }
+    }
     </style>
 """, unsafe_allow_html=True)
 
