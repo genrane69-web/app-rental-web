@@ -19,6 +19,11 @@ WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxAmkZZQvY-Y2mK8LVvYH7TFQ
 # -----------------------------------------------------------------------------
 st.markdown("""
     <style>
+        /* บังคับสีข้อความหัวข้อทั้งหมดให้เป็นสีดำเข้ม */
+    h1, h2, h3, [data-testid="stHeadingWithTitleContent"] {
+        color: #0F172A !important;
+    }
+
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
     
     * {
