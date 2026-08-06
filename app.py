@@ -19,6 +19,10 @@ WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxAmkZZQvY-Y2mK8LVvYH7TFQ
 # -----------------------------------------------------------------------------
 st.markdown("""
     <style>
+        /* บังคับสีข้อความหัวข้อทั้งหมดให้เป็นสีดำเข้ม */
+    h1, h2, h3, [data-testid="stHeadingWithTitleContent"] {
+        color: #0F172A !important;
+    }
             /* 1. บังคับสีตัวหนังสือหัวข้อคำถาม FAQ (st.expander) ให้เป็นสีเข้ม */
     [data-testid="stExpander"] summary * {
         color: #0F172A !important;
