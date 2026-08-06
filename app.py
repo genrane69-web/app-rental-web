@@ -338,7 +338,7 @@ st.markdown("""
 
 hero_btn_col1, hero_btn_col2, hero_btn_col3 = st.columns([1, 2, 1])
 with hero_btn_col2:
-    st.button("✨ เริ่มทดลองใช้งานฟรี 14 วัน (ไม่ต้องใช้บัตรเครดิต)", key="hero_cta")
+    st.button("✨ เริ่มทดลองใช้งานฟรี 30 วัน (ไม่ต้องใช้บัตรเครดิต)", key="hero_cta")
 
 st.markdown("<br>", unsafe_allow_html=True)
 
