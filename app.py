@@ -542,45 +542,8 @@ with st.expander("Q: ข้อมูลภายในระบบมีคว�
     * **เข้ารหัสตามมาตรฐาน Google:** การส่งข้อมูลทั้งหมดผ่านโปรโตคอลเข้ารหัส SSL/TLS (HTTPS)
     * **ควบคุมสิทธิ์ได้เอง:** มีเพียงคุณและผู้ที่คุณอนุญาตใน Google Drive เท่านั้นที่เปิดดูไฟล์ได้""")
 
-st.markdown("<br><br>", unsafe_allow_html=True)
-
 # -----------------------------------------------------------------------------
-# 11. LEAD FORM / REGISTER
-# -----------------------------------------------------------------------------
-st.markdown('<div id="register"></div>', unsafe_allow_html=True)
-st.subheader("📩 ลงชื่อขอรับสิทธิ์ทดลองใช้งานฟรี 14 วัน")
-st.write("กรอกข้อมูลสั้นๆ ด้านล่าง ทีมงานจะติดต่อกลับเพื่อตั้งค่าระบบให้ทันที")
-
-with st.form("lead_form"):
-    name = st.text_input("ชื่อ-นามสกุล หรือ ชื่อร้านค้า / หอพัก", placeholder="เช่น คุณสมชาย (ร้านขายดี)")
-    email = st.text_input("เบอร์โทรศัพท์ / LINE ID / อีเมล", placeholder="เช่น 081-234-5678 หรือ Line ID")
-    selected_app = st.selectbox(
-        "สนใจทดลองใช้งานระบบใดมากที่สุด",
-        ["ระบบขายของ (POS)", "ระบบจัดการหอพัก", "สนใจทั้ง 2 ระบบ / ต้องการให้พัฒนาเพิ่ม"]
-    )
-    note = st.text_area("ข้อความถึงทีมงาน / คำถามเพิ่มเติม (ถ้ามี)", placeholder="เช่น อยากได้ระบบสแกนบาร์โค้ดเพิ่มด้วย...")
-    
-    submit = st.form_submit_button("🚀 ส่งข้อมูลขอรับสิทธิ์ใช้งานฟรี")
-
-    if submit:
-        if name and email:
-            payload = {
-                "name": name,
-                "email": email,
-                "selected_app": selected_app,
-                "note": note
-            }
-            try:
-                response = requests.post(WEBHOOK_URL, json=payload)
-                st.balloons()
-                st.success(f"🎉 ขอบคุณครับคุณ {name}! บันทึกข้อมูลเรียบร้อยแล้ว ทีมงานจะติดต่อกลับโดยเร็วที่สุดครับ")
-            except Exception as e:
-                st.error("เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาตรวจสอบอินเทอร์เน็ตหรือลองใหม่อีกครั้ง")
-        else:
-            st.warning("⚠️ กรุณากรอกชื่อและช่องทางการติดต่อให้ครบถ้วนนะครับ")
-
-# -----------------------------------------------------------------------------
-# 12. BOTTOM CTA BANNER & FOOTER
+# 11. BOTTOM CTA BANNER & FOOTER
 # -----------------------------------------------------------------------------
 st.markdown("""
     <div style="background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%); border-radius: 24px; padding: 48px; color: white; text-align: center; margin-top: 48px;">
