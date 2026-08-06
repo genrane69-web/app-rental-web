@@ -431,8 +431,6 @@ with c_dorm:
     """, unsafe_allow_html=True)
     st.button("เลือกแพ็กเกจ Apartment", key="select_dorm")
 
-st.markdown("<br><br>", unsafe_allow_html=True)
-
 # -----------------------------------------------------------------------------
 # 8. FEATURES GRID
 # -----------------------------------------------------------------------------
