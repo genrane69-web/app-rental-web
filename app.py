@@ -331,7 +331,7 @@ st.markdown("""
         <div class="hero-title">AppRental<br>ระบบเว็บแอปสำหรับธุรกิจ</div>
         <div class="hero-subtitle">
             พร้อมใช้งานภายใน 5 นาที • ไม่ต้องซื้อขาด • ไม่ต้องดูแลเซิร์ฟเวอร์<br>
-            ยกระดับการทำงานให้เป็นระบบและทันสมัย เริ่มต้นเพียง 299 บาท / เดือน
+            ยกระดับการทำงานให้เป็นระบบและทันสมัย เริ่มต้นเพียง 159 บาท / เดือน
         </div>
     </div>
 """, unsafe_allow_html=True)
@@ -407,7 +407,7 @@ with c_pos:
             <div style="color: #64748B; font-size: 0.875rem; margin-top: 4px; margin-bottom: 16px;">
                 เหมาะสำหรับ: ร้านค้าทั่วไป, ร้านกาแฟ, มินิมาร์ท
             </div>
-            <div class="price-tag">299 ฿ <span>/ เดือน</span></div>
+            <div class="price-tag">159 ฿ <span>/ เดือน</span></div>
             <hr style="border: none; border-top: 1px solid #F1F5F9; margin: 16px 0;">
             <div class="feature-item"><span class="check-icon">✓</span> ระบบบันทึกยอดขายหน้าร้านง่ายๆ</div>
             <div class="feature-item"><span class="check-icon">✓</span> ตัดสต็อกสินค้าให้อัตโนมัติ</div>
@@ -425,7 +425,7 @@ with c_dorm:
             <div style="color: #64748B; font-size: 0.875rem; margin-top: 4px; margin-bottom: 16px;">
                 เหมาะสำหรับ: หอพัก, อพาร์ทเม้นท์, ห้องเช่า
             </div>
-            <div class="price-tag">499 ฿ <span>/ เดือน</span></div>
+            <div class="price-tag">199 ฿ <span>/ เดือน</span></div>
             <hr style="border: none; border-top: 1px solid #F1F5F9; margin: 16px 0;">
             <div class="feature-item"><span class="check-icon">✓</span> คำนวณค่าน้ำ-ค่าไฟ อัตโนมัติ</div>
             <div class="feature-item"><span class="check-icon">✓</span> ออกใบแจ้งหนี้ PDF สวยงาม</div>
@@ -479,7 +479,7 @@ with f3:
 # 9. TESTIMONIALS
 # -----------------------------------------------------------------------------
 st.markdown('<div id="reviews"></div>', unsafe_allow_html=True)
-st.subheader("💬 เสียงตอบ")
+st.subheader("💬 เสียงตอบรับ")
 
 r1, r2 = st.columns(2)
 with r1:
