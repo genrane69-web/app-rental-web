@@ -19,6 +19,16 @@ WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxAmkZZQvY-Y2mK8LVvYH7TFQ
 # -----------------------------------------------------------------------------
 st.markdown("""
     <style>
+        /* แต่งกล่อง FAQ (st.expander) ให้เป็นกรอบการ์ดสีขาวขอบชัดเจน */
+    [data-testid="stExpander"] {
+        background-color: #FFFFFF !important;
+        border: 1px solid #CBD5E1 !important;
+        border-radius: 16px !important;
+        margin-bottom: 12px !important;
+        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06) !important;
+        overflow: hidden !important;
+    }
+
         /* บังคับสีข้อความหัวข้อทั้งหมดให้เป็นสีดำเข้ม */
     h1, h2, h3, [data-testid="stHeadingWithTitleContent"] {
         color: #0F172A !important;
