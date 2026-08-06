@@ -479,7 +479,7 @@ with f3:
 # 9. TESTIMONIALS
 # -----------------------------------------------------------------------------
 st.markdown('<div id="reviews"></div>', unsafe_allow_html=True)
-st.subheader("💬 เสียงตอบรับจากผู้ใช้งานจริง")
+st.subheader("💬 เสียงตอบ")
 
 r1, r2 = st.columns(2)
 with r1:
