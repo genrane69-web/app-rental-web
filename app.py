@@ -506,7 +506,7 @@ with r1:
                 "ตั้งแต่เปลี่ยนมาใช้ระบบ POS ของ AppRental การเช็คสต็อกง่ายขึ้นมาก ประหยัดเวลาไปได้วันละหลายชั่วโมง ยอดขายโตขึ้นชัดเจนครับ"
             </div>
             <div style="font-weight: 700; color: #0F172A;">คุณสมชาย</div>
-            <div style="font-size: 0.8rem; color: #64748B;">เจ้าของร้าน ABC MiniMart</div>
+            <div style="font-size: 0.8rem; color: #64748B;">เจ้าของร้าน BaMiniMart</div>
         </div>
     """, unsafe_allow_html=True)
 
@@ -518,7 +518,7 @@ with r2:
                 "ระบบจัดการหอพักช่วยให้ออกบิลค่าน้ำไฟไวมาก ผู้เช่าก็ชอบเพราะแจ้งเตือนเข้า LINE ตรงๆ ไม่ต้องคอยตามจดกระดาษอีกต่อไป"
             </div>
             <div style="font-weight: 700; color: #0F172A;">คุณเอก</div>
-            <div style="font-size: 0.8rem; color: #64748B;">ผู้บริหาร Apartment XYZ</div>
+            <div style="font-size: 0.8rem; color: #64748B;">ผู้บริหาร Apartment Zebing</div>
         </div>
     """, unsafe_allow_html=True)
 
