@@ -5,136 +5,481 @@ import requests
 # 1. ตั้งค่าหน้าเว็บ
 # -----------------------------------------------------------------------------
 st.set_page_config(
-    page_title="AppRental - ให้เช่าระบบเว็บแอปองค์กร",
+    page_title="AppRental - ระบบเว็บแอปสำหรับธุรกิจ",
     page_icon="🚀",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
 
-# 🔗 นำ URL ที่ได้จาก Google Apps Script มาวางตรงนี้
+# 🔗 วาง URL ที่ได้จาก Google Apps Script ตรงนี้
 WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxAmkZZQvY-Y2mK8LVvYH7TFQI0RJnNbWI880zJVkJgGCKifD0bnYaAGdjIOK-BFvi5/exec"
 
 # -----------------------------------------------------------------------------
-# 2. ตกแต่งความสวยงามด้วย Custom CSS
+# 2. CUSTOM CSS (Stripe / Linear / Apple Design System)
 # -----------------------------------------------------------------------------
 st.markdown("""
     <style>
-    /* ซ่อน Header และ Menu ส่วนเกินของ Streamlit */
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
     
-    /* สไตล์สำหรับกล่องเน้นข้อความ (Hero Banner) */
-    .hero-container {
-        background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
-        padding: 40px 20px;
-        border-radius: 20px;
-        color: white;
-        text-align: center;
-        margin-bottom: 25px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    * {
+        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
     
-    /* สไตล์ปุ่มกดสุ่ม/ส่งข้อมูล */
-    div.stButton > button:first-child {
-        background: linear-gradient(45deg, #FF4B4B, #FF7B54);
-        color: white;
-        border-radius: 12px;
-        border: none;
-        padding: 12px 28px;
-        font-size: 16px;
-        font-weight: bold;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(255, 75, 75, 0.3);
-        width: 100%;
+    /* ซ่อน Header และ Elements ดั้งเดิมของ Streamlit */
+    #MainMenu, footer, header {visibility: hidden;}
+    [data-testid="stAppViewContainer"] {
+        background-color: #F8FAFC;
+        padding-top: 0rem;
     }
-    
-    div.stButton > button:first-child:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(255, 75, 75, 0.4);
+    .block-container {
+        padding-top: 1rem !important;
+        padding-bottom: 3rem !important;
+        max-width: 1200px;
     }
 
-    /* แต่งกล่องฟอร์มกรอกข้อมูล */
-    [data-testid="stForm"] {
-        border-radius: 20px;
-        padding: 30px;
-        background-color: #FFFFFF;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    /* Navbar */
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 24px;
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(12px);
         border: 1px solid #E2E8F0;
+        border-radius: 16px;
+        margin-bottom: 24px;
+        position: sticky;
+        top: 10px;
+        z-index: 999;
+    }
+    .navbar-brand {
+        font-weight: 800;
+        font-size: 1.25rem;
+        color: #0F172A;
+        letter-spacing: -0.5px;
+    }
+    .navbar-menu {
+        display: flex;
+        gap: 24px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #475569;
+    }
+    .navbar-menu a {
+        color: #475569;
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+    .navbar-menu a:hover {
+        color: #2563EB;
+    }
+
+    /* Hero Section */
+    .hero-container {
+        background: linear-gradient(135deg, #0F172A 0%, #1E3A8A 100%);
+        border-radius: 28px;
+        padding: 60px 40px;
+        color: white;
+        text-align: center;
+        margin-bottom: 32px;
+        box-shadow: 0 20px 40px rgba(15, 23, 42, 0.12);
+        position: relative;
+        overflow: hidden;
+    }
+    .hero-title {
+        font-size: 3rem;
+        font-weight: 800;
+        letter-spacing: -1px;
+        line-height: 1.15;
+        margin-bottom: 16px;
+        background: linear-gradient(180deg, #FFFFFF 0%, #93C5FD 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .hero-subtitle {
+        font-size: 1.15rem;
+        color: #94A3B8;
+        max-width: 650px;
+        margin: 0 auto 32px auto;
+        line-height: 1.6;
+    }
+
+    /* Stats Section */
+    .stat-card {
+        background: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-radius: 20px;
+        padding: 24px;
+        text-align: center;
+        box-shadow: 0 1px 2px rgba(0,0,0,.05);
+    }
+    .stat-number {
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: #2563EB;
+        margin-bottom: 4px;
+    }
+    .stat-label {
+        font-size: 0.875rem;
+        color: #64748B;
+        font-weight: 500;
+    }
+
+    /* Social Proof Logos */
+    .logo-bar {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 40px;
+        opacity: 0.6;
+        filter: grayscale(100%);
+        margin: 24px 0 40px 0;
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: #475569;
+    }
+
+    /* Dashboard Mockup */
+    .dashboard-mockup {
+        background: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-radius: 24px;
+        padding: 20px;
+        box-shadow: 0 12px 32px rgba(15, 23, 42, 0.08);
+        margin-bottom: 48px;
+    }
+    .mockup-header {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 16px;
+    }
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot-red { background: #EF4444; }
+    .dot-yellow { background: #F59E0B; }
+    .dot-green { background: #10B981; }
+
+    /* Custom Cards & Hover Effects */
+    .saas-card {
+        background: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-radius: 24px;
+        padding: 32px;
+        box-shadow: 0 1px 2px rgba(0,0,0,.05), 0 8px 24px rgba(15,23,42,.04);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        height: 100%;
+    }
+    .saas-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 15px 40px rgba(15, 23, 42, 0.12);
+        border-color: #CBD5E1;
+    }
+
+    /* Feature List */
+    .feature-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #334155;
+        font-size: 0.95rem;
+        margin-bottom: 12px;
+    }
+    .check-icon {
+        color: #22C55E;
+        font-weight: bold;
+    }
+
+    /* Price Badge */
+    .price-tag {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #0F172A;
+        margin: 16px 0;
+    }
+    .price-tag span {
+        font-size: 0.9rem;
+        color: #64748B;
+        font-weight: 500;
+    }
+
+    /* Buttons Override */
+    div.stButton > button {
+        background-color: #2563EB !important;
+        color: #FFFFFF !important;
+        border-radius: 14px !important;
+        border: none !important;
+        padding: 12px 24px !important;
+        font-weight: 600 !important;
+        font-size: 0.95rem !important;
+        width: 100% !important;
+        transition: all 0.2s ease !important;
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2) !important;
+    }
+    div.stButton > button:hover {
+        background-color: #1D4ED8 !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3) !important;
+    }
+
+    /* Form Styling */
+    [data-testid="stForm"] {
+        background: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-radius: 24px;
+        padding: 32px;
+        box-shadow: 0 8px 24px rgba(15,23,42,.06);
+    }
+
+    /* Testimonials */
+    .review-card {
+        background: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-radius: 20px;
+        padding: 24px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .stars { color: #F59E0B; margin-bottom: 8px; }
+
+    /* Footer */
+    .footer-container {
+        border-top: 1px solid #E2E8F0;
+        padding-top: 32px;
+        margin-top: 60px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: #64748B;
+        font-size: 0.875rem;
     }
     </style>
 """, unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
-# 3. ส่วนหัวเว็บ (Hero Section)
+# 3. NAVBAR
 # -----------------------------------------------------------------------------
 st.markdown("""
-    <div class="hero-container">
-        <h1 style="color: #FFFFFF; font-size: 2.5rem; margin-bottom: 10px;">🚀 AppRental</h1>
-        <p style="color: #94A3B8; font-size: 1.2rem; margin-bottom: 0px;">
-            เช่าระบบเว็บแอปพร้อมใช้งาน ยกระดับธุรกิจของคุณง่ายๆ เริ่มต้นหลักร้อย/เดือน
-        </p>
+    <div class="navbar">
+        <div class="navbar-brand">🚀 AppRental</div>
+        <div class="navbar-menu">
+            <a href="#services">บริการ</a>
+            <a href="#pricing">ราคา</a>
+            <a href="#reviews">รีวิว</a>
+            <a href="#faq">FAQ</a>
+            <a href="#register">ติดต่อ</a>
+        </div>
+        <div style="font-weight: 600; color: #2563EB;">[ ทดลองใช้ฟรี ]</div>
     </div>
 """, unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
-# 4. แสดงรายละเอียดบริการด้วย Tabs & Cards
+# 4. HERO SECTION
 # -----------------------------------------------------------------------------
-st.subheader("💡 ระบบแอปสำเร็จรูปที่เราให้บริการ")
+st.markdown("""
+    <div class="hero-container">
+        <div class="hero-title">AppRental<br>ระบบเว็บแอปสำหรับธุรกิจ</div>
+        <div class="hero-subtitle">
+            พร้อมใช้งานภายใน 5 นาที • ไม่ต้องซื้อขาด • ไม่ต้องดูแลเซิร์ฟเวอร์<br>
+            ยกระดับการทำงานให้เป็นระบบและทันสมัย เริ่มต้นเพียง 299 บาท / เดือน
+        </div>
+    </div>
+""", unsafe_allow_html=True)
 
-tab1, tab2 = st.tabs(["🛒 1. ระบบจัดการหน้าร้าน (POS)", "🏢 2. ระบบบริหารจัดการหอพัก"])
+hero_btn_col1, hero_btn_col2, hero_btn_col3 = st.columns([1, 2, 1])
+with hero_btn_col2:
+    st.button("✨ เริ่มทดลองใช้งานฟรี 14 วัน (ไม่ต้องใช้บัตรเครดิต)", key="hero_cta")
 
-with tab1:
-    with st.container(border=True):
-        col_info, col_price = st.columns([2, 1])
-        with col_info:
-            st.markdown("### 🛒 ระบบขายของหน้าร้าน & เช็คสต็อก (POS)")
-            st.write("• บันทึกยอดขายประจำวัน ตัดสต็อกสินค้าอัจฉริยะ")
-            st.write("• ออกใบเสร็จรับเงิน และสรุปรายงานยอดขาย Daily/Monthly")
-            st.write("• ดึงข้อมูลเข้า Google Sheets หรือ Excel ได้ตลอดเวลา")
-        with col_price:
-            st.metric(label="ค่าบริการรายเดือน", value="299 บาท", delta="ทดลองใช้ฟรี 14 วัน")
-            st.caption("✅ รวมบริการดูแลเซิร์ฟเวอร์และอัปเดตฟรี")
-
-with tab2:
-    with st.container(border=True):
-        col_info, col_price = st.columns([2, 1])
-        with col_info:
-            st.markdown("### 🏢 ระบบจัดการหอพัก & อพาร์ทเม้นท์")
-            st.write("• คำนวณค่าน้ำ-ค่าไฟ และออกใบแจ้งหนี้อัตโนมัติ")
-            st.write("• ระบบรับแจ้งซ่อมออนไลน์สำหรับผู้เช่า")
-            st.write("• แจ้งเตือนยอดชำระเงินตรงเข้า LINE ผู้เช่า")
-        with col_price:
-            st.metric(label="ค่าบริการรายเดือน", value="499 บาท", delta="ทดลองใช้ฟรี 14 วัน")
-            st.caption("✅ รวมบริการดูแลเซิร์ฟเวอร์และอัปเดตฟรี")
-
-st.divider()
+st.markdown("<br>", unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
-# 5. จุดเด่นบริการ (Features Grid)
+# 5. STATS SECTION
 # -----------------------------------------------------------------------------
-st.subheader("⚡ ทำไมถึงต้องเลือกเช่าระบบกับเรา?")
-col_a, col_b, col_c = st.columns(3)
+s1, s2, s3, s4 = st.columns(4)
+with s1:
+    st.markdown('<div class="stat-card"><div class="stat-number">500+</div><div class="stat-label">ลูกค้าไว้วางใจใช้งาน</div></div>', unsafe_allow_html=True)
+with s2:
+    st.markdown('<div class="stat-card"><div class="stat-number">99.9%</div><div class="stat-label">Server Uptime</div></div>', unsafe_allow_html=True)
+with s3:
+    st.markdown('<div class="stat-card"><div class="stat-number">24/7</div><div class="stat-label">ทีมงานคอยดูแล</div></div>', unsafe_allow_html=True)
+with s4:
+    st.markdown('<div class="stat-card"><div class="stat-number">14 วัน</div><div class="stat-label">ทดลองใช้ฟรีทุกฟีเจอร์</div></div>', unsafe_allow_html=True)
 
-with col_a:
-    with st.container(border=True):
-        st.markdown("#### ⚡ พร้อมใช้ใน 5 นาที")
-        st.write("ไม่ต้องเสียเวลาและค่าใช้จ่ายเขียนโปรแกรมหลักแสน สมัครแล้วเข้าใช้ได้ทันที")
-
-with col_b:
-    with st.container(border=True):
-        st.markdown("#### 🛠️ ดูแลระบบให้ฟรี")
-        st.write("หมดห่วงเรื่องเซิร์ฟเวอร์ล่ม มีทีมงานสำรองข้อมูลและอัปเดตความปลอดภัย 24 ชม.")
-
-with col_c:
-    with st.container(border=True):
-        st.markdown("#### 📱 รองรับทุกอุปกรณ์")
-        st.write("เปิดใช้งานผ่านมือถือ แท็บเล็ต หรือคอมพิวเตอร์ได้ทันทีโดยไม่ต้องลงแอปเพิ่ม")
-
-st.divider()
+# Social Proof Logos
+st.markdown("""
+    <div style="text-align: center; margin-top: 32px; color: #94A3B8; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">
+        ได้รับความไว้วางใจจากผู้ใช้และร้านค้าชั้นนำ
+    </div>
+    <div class="logo-bar">
+        <span>Google</span>
+        <span>LINE</span>
+        <span>Shopee</span>
+        <span>Lazada</span>
+        <span>TikTok</span>
+    </div>
+""", unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
-# 6. ฟอร์มลงชื่อรับสิทธิ์ใช้งานฟรี (Lead Form)
+# 6. PRODUCT DASHBOARD PREVIEW
 # -----------------------------------------------------------------------------
+st.markdown("""
+    <div class="dashboard-mockup">
+        <div class="mockup-header">
+            <div class="dot dot-red"></div>
+            <div class="dot dot-yellow"></div>
+            <div class="dot dot-green"></div>
+            <span style="font-size: 0.8rem; color: #94A3B8; margin-left: 8px;">apprental.co/dashboard</span>
+        </div>
+        <div style="background: #F8FAFC; border-radius: 12px; padding: 24px; border: 1px solid #F1F5F9;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 16px;">
+                <div style="font-weight: 700; color: #0F172A;">📊 สรุปยอดขายรวมประจำเดือน</div>
+                <div style="color: #22C55E; font-weight: 600; font-size: 0.9rem;">+24.5% จากเดือนที่แล้ว</div>
+            </div>
+            <div style="height: 12px; background: #2563EB; border-radius: 6px; width: 85%; margin-bottom: 8px;"></div>
+            <div style="height: 12px; background: #38BDF8; border-radius: 6px; width: 60%; margin-bottom: 8px;"></div>
+            <div style="height: 12px; background: #CBD5E1; border-radius: 6px; width: 40%;"></div>
+        </div>
+    </div>
+""", unsafe_allow_html=True)
+
+# -----------------------------------------------------------------------------
+# 7. SERVICE CARDS (POS & APARTMENT)
+# -----------------------------------------------------------------------------
+st.markdown('<div id="services"></div>', unsafe_allow_html=True)
+st.subheader("💡 บริการระบบแอปยอดนิยม")
+
+c_pos, c_dorm = st.columns(2)
+
+with c_pos:
+    st.markdown("""
+        <div class="saas-card">
+            <div style="font-size: 1.5rem; font-weight: 800; color: #0F172A;">🛒 POS System</div>
+            <div style="color: #64748B; font-size: 0.875rem; margin-top: 4px; margin-bottom: 16px;">
+                เหมาะสำหรับ: ร้านค้าทั่วไป, ร้านกาแฟ, มินิมาร์ท
+            </div>
+            <div class="price-tag">299 ฿ <span>/ เดือน</span></div>
+            <hr style="border: none; border-top: 1px solid #F1F5F9; margin: 16px 0;">
+            <div class="feature-item"><span class="check-icon">✓</span> ระบบบันทึกยอดขายหน้าร้านง่ายๆ</div>
+            <div class="feature-item"><span class="check-icon">✓</span> ตัดสต็อกสินค้าให้อัตโนมัติ</div>
+            <div class="feature-item"><span class="check-icon">✓</span> รองรับการสแกนบาร์โค้ด</div>
+            <div class="feature-item"><span class="check-icon">✓</span> ออกใบเสร็จและรายงานยอดขาย</div>
+            <div class="feature-item"><span class="check-icon">✓</span> ดึงข้อมูลเข้า Google Sheets ได้ทันที</div>
+        </div>
+    """, unsafe_allow_html=True)
+    st.button("เลือกแพ็กเกจ POS", key="select_pos")
+
+with c_dorm:
+    st.markdown("""
+        <div class="saas-card">
+            <div style="font-size: 1.5rem; font-weight: 800; color: #0F172A;">🏢 Apartment System</div>
+            <div style="color: #64748B; font-size: 0.875rem; margin-top: 4px; margin-bottom: 16px;">
+                เหมาะสำหรับ: หอพัก, อพาร์ทเม้นท์, ห้องเช่า
+            </div>
+            <div class="price-tag">499 ฿ <span>/ เดือน</span></div>
+            <hr style="border: none; border-top: 1px solid #F1F5F9; margin: 16px 0;">
+            <div class="feature-item"><span class="check-icon">✓</span> คำนวณค่าน้ำ-ค่าไฟ อัตโนมัติ</div>
+            <div class="feature-item"><span class="check-icon">✓</span> ออกใบแจ้งหนี้ PDF สวยงาม</div>
+            <div class="feature-item"><span class="check-icon">✓</span> แจ้งเตือนยอดผ่าน LINE ผู้เช่า</div>
+            <div class="feature-item"><span class="check-icon">✓</span> ระบบรับแจ้งซ่อมออนไลน์</div>
+            <div class="feature-item"><span class="check-icon">✓</span> สรุปรายงานการจ่ายเงินประจำเดือน</div>
+        </div>
+    """, unsafe_allow_html=True)
+    st.button("เลือกแพ็กเกจ Apartment", key="select_dorm")
+
+st.markdown("<br><br>", unsafe_allow_html=True)
+
+# -----------------------------------------------------------------------------
+# 8. FEATURES GRID
+# -----------------------------------------------------------------------------
+st.subheader("⚡ คุณสมบัติเด่นที่ทำให้เราแตกต่าง")
+f1, f2, f3 = st.columns(3)
+
+with f1:
+    st.markdown("""
+        <div class="saas-card">
+            <div style="font-size: 2rem; margin-bottom: 12px;">⚡</div>
+            <div style="font-weight: 700; font-size: 1.1rem; color: #0F172A; margin-bottom: 8px;">พร้อมใช้ใน 5 นาที</div>
+            <div style="color: #64748B; font-size: 0.9rem; line-height: 1.5;">
+                ไม่ต้องรอเขียนโปรแกรมเป็นเดือนๆ สมัครเสร็จรับ ลิงก์ และสิทธิ์เข้าใช้งานได้ทันที
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
+
+with f2:
+    st.markdown("""
+        <div class="saas-card">
+            <div style="font-size: 2rem; margin-bottom: 12px;">🛠️</div>
+            <div style="font-weight: 700; font-size: 1.1rem; color: #0F172A; margin-bottom: 8px;">ดูแลระบบให้ฟรี 24 ชม.</div>
+            <div style="color: #64748B; font-size: 0.9rem; line-height: 1.5;">
+                มีทีมงานคอยดูแลเซิร์ฟเวอร์ สำรองข้อมูล และอัปเดตฟีเจอร์ใหม่ๆ ให้ตลอดเวลา
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
+
+with f3:
+    st.markdown("""
+        <div class="saas-card">
+            <div style="font-size: 2rem; margin-bottom: 12px;">📱</div>
+            <div style="font-weight: 700; font-size: 1.1rem; color: #0F172A; margin-bottom: 8px;">รองรับทุกอุปกรณ์</div>
+            <div style="color: #64748B; font-size: 0.9rem; line-height: 1.5;">
+                ใช้งานผ่านเบราว์เซอร์บนมือถือ แท็บเล็ต หรือคอมพิวเตอร์ได้ทันทีโดยไม่ต้องลงแอป
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
+
+st.markdown("<br><br>", unsafe_allow_html=True)
+
+# -----------------------------------------------------------------------------
+# 9. TESTIMONIALS
+# -----------------------------------------------------------------------------
+st.markdown('<div id="reviews"></div>', unsafe_allow_html=True)
+st.subheader("💬 เสียงตอบรับจากผู้ใช้งานจริง")
+
+r1, r2 = st.columns(2)
+with r1:
+    st.markdown("""
+        <div class="review-card">
+            <div class="stars">★★★★★</div>
+            <div style="color: #334155; font-size: 0.95rem; line-height: 1.6; margin-bottom: 12px;">
+                "ตั้งแต่เปลี่ยนมาใช้ระบบ POS ของ AppRental การเช็คสต็อกง่ายขึ้นมาก ประหยัดเวลาไปได้วันละหลายชั่วโมง ยอดขายโตขึ้นชัดเจนครับ"
+            </div>
+            <div style="font-weight: 700; color: #0F172A;">คุณสมชาย</div>
+            <div style="font-size: 0.8rem; color: #64748B;">เจ้าของร้าน ABC MiniMart</div>
+        </div>
+    """, unsafe_allow_html=True)
+
+with r2:
+    st.markdown("""
+        <div class="review-card">
+            <div class="stars">★★★★★</div>
+            <div style="color: #334155; font-size: 0.95rem; line-height: 1.6; margin-bottom: 12px;">
+                "ระบบจัดการหอพักช่วยให้ออกบิลค่าน้ำไฟไวมาก ผู้เช่าก็ชอบเพราะแจ้งเตือนเข้า LINE ตรงๆ ไม่ต้องคอยตามจดกระดาษอีกต่อไป"
+            </div>
+            <div style="font-weight: 700; color: #0F172A;">คุณเอก</div>
+            <div style="font-size: 0.8rem; color: #64748B;">ผู้บริหาร Apartment XYZ</div>
+        </div>
+    """, unsafe_allow_html=True)
+
+st.markdown("<br><br>", unsafe_allow_html=True)
+
+# -----------------------------------------------------------------------------
+# 10. FAQ SECTION
+# -----------------------------------------------------------------------------
+st.markdown('<div id="faq"></div>', unsafe_allow_html=True)
+st.subheader("❓ คำถามที่พบบ่อย (FAQ)")
+
+with st.expander("Q: สามารถทดลองใช้งานฟรีได้กี่วัน?"):
+    st.write("A: สามารถทดลองใช้งานได้ฟรี 14 วันเต็ม โดยไม่ต้องกรอกข้อมูลบัตรเครดิตครับ")
+
+with st.expander("Q: สามารถยกเลิกการเช่าเมื่อไรก็ได้ใช่ไหม?"):
+    st.write("A: ใช่ครับ ไม่มีสัญญาผูกมัดใดๆ คุณสามารถยกเลิกหรือเปลี่ยนแพ็กเกจได้ทุกเมื่อ")
+
+with st.expander("Q: ข้อมูลภายในระบบมีความปลอดภัยแค่ไหน?"):
+    st.write("A: ข้อมูลทั้งหมดถูกเข้ารหัสตามมาตรฐานความปลอดภัย SSL/TLS และมีการสำรองข้อมูลอัตโนมัติทุกวัน")
+
+st.markdown("<br><br>", unsafe_allow_html=True)
+
+# -----------------------------------------------------------------------------
+# 11. LEAD FORM / REGISTER
+# -----------------------------------------------------------------------------
+st.markdown('<div id="register"></div>', unsafe_allow_html=True)
 st.subheader("📩 ลงชื่อขอรับสิทธิ์ทดลองใช้งานฟรี 14 วัน")
 st.write("กรอกข้อมูลสั้นๆ ด้านล่าง ทีมงานจะติดต่อกลับเพื่อตั้งค่าระบบให้ทันที")
 
@@ -147,7 +492,7 @@ with st.form("lead_form"):
     )
     note = st.text_area("ข้อความถึงทีมงาน / คำถามเพิ่มเติม (ถ้ามี)", placeholder="เช่น อยากได้ระบบสแกนบาร์โค้ดเพิ่มด้วย...")
     
-    submit = st.form_submit_button("🚀 ยืนยันขอรับสิทธิ์ใช้งานฟรี")
+    submit = st.form_submit_button("🚀 ส่งข้อมูลขอรับสิทธิ์ใช้งานฟรี")
 
     if submit:
         if name and email:
@@ -158,7 +503,6 @@ with st.form("lead_form"):
                 "note": note
             }
             try:
-                # ส่งข้อมูลไปที่ Google Apps Script
                 response = requests.post(WEBHOOK_URL, json=payload)
                 st.balloons()
                 st.success(f"🎉 ขอบคุณครับคุณ {name}! บันทึกข้อมูลเรียบร้อยแล้ว ทีมงานจะติดต่อกลับโดยเร็วที่สุดครับ")
@@ -166,3 +510,24 @@ with st.form("lead_form"):
                 st.error("เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาตรวจสอบอินเทอร์เน็ตหรือลองใหม่อีกครั้ง")
         else:
             st.warning("⚠️ กรุณากรอกชื่อและช่องทางการติดต่อให้ครบถ้วนนะครับ")
+
+# -----------------------------------------------------------------------------
+# 12. BOTTOM CTA BANNER & FOOTER
+# -----------------------------------------------------------------------------
+st.markdown("""
+    <div style="background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%); border-radius: 24px; padding: 48px; color: white; text-align: center; margin-top: 48px;">
+        <h2 style="color: white; font-weight: 800; margin-bottom: 8px;">พร้อมเริ่มใช้งานแล้วหรือยัง?</h2>
+        <p style="color: #93C5FD; font-size: 1.05rem; margin-bottom: 24px;">ทดลองใช้ฟรี 14 วัน ไม่ต้องใช้บัตรเครดิต</p>
+    </div>
+    
+    <div class="footer-container">
+        <div>
+            <strong style="color: #0F172A;">AppRental</strong><br>
+            บริการให้เช่าระบบเว็บแอปสำหรับธุรกิจ
+        </div>
+        <div>
+            Facebook • LINE • Email<br>
+            ©2026 AppRental. All rights reserved.
+        </div>
+    </div>
+""", unsafe_allow_html=True)
