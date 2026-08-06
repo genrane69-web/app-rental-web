@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 
 # 🔗 วาง URL ที่ได้จาก Google Apps Script ตรงนี้
-WEBHOOK_URL = "นำ_URL_จาก_APPS_SCRIPT_มาวางตรงนี้"
+WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxAmkZZQvY-Y2mK8LVvYH7TFQI0RJnNbWI880zJVkJgGCKifD0bnYaAGdjIOK-BFvi5/exec"
 
 st.set_page_config(page_title="AppRental - ให้เช่าระบบเว็บแอป", page_icon="🚀", layout="wide")
 
