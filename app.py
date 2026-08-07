@@ -6,7 +6,7 @@ import requests
 # -----------------------------------------------------------------------------
 st.set_page_config(
     page_title="AppRental - ระบบเว็บแอปสำหรับธุรกิจ",
-    page_icon=" ",
+    page_icon="🚀",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
@@ -232,8 +232,8 @@ st.markdown("""
         font-weight: 500;
     }
 
-    /* Buttons Override */
-    div.stButton > button {
+    /* Buttons & Link Buttons Override */
+    div.stButton > button, div.stLinkButton > a {
         background-color: #2563EB !important;
         color: #FFFFFF !important;
         border-radius: 14px !important;
@@ -242,11 +242,15 @@ st.markdown("""
         font-weight: 600 !important;
         font-size: 0.95rem !important;
         width: 100% !important;
+        text-align: center !important;
+        text-decoration: none !important;
+        display: block !important;
         transition: all 0.2s ease !important;
         box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2) !important;
     }
-    div.stButton > button:hover {
+    div.stButton > button:hover, div.stLinkButton > a:hover {
         background-color: #1D4ED8 !important;
+        color: #FFFFFF !important;
         transform: translateY(-1px) !important;
         box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3) !important;
     }
@@ -281,22 +285,16 @@ st.markdown("""
         color: #64748B;
         font-size: 0.875rem;
     }
-        /* ==================================================
-       ตั้งค่า responsive สำหรับจอมือถือและแท็บเล็ต (<= 768px)
-       ================================================== */
+
+    /* Responsive Design */
     @media (max-width: 768px) {
-        /* 1. ลดระยะขอบรอบเว็บให้มีพื้นที่อ่านเนื้อหามากขึ้น */
         .block-container {
             padding-left: 0.75rem !important;
             padding-right: 0.75rem !important;
         }
-
-        /* 2. ซ่อนเมนูลิงก์ navbar ยาวๆ ไม่ให้ล้นจอมือถือ */
         .navbar-menu {
             display: none !important;
         }
-
-        /* 3. ย่อขนาดส่วน Hero Section และตัวหนังสือ */
         .hero-container {
             padding: 36px 16px !important;
             border-radius: 20px !important;
@@ -308,21 +306,15 @@ st.markdown("""
         .hero-subtitle {
             font-size: 0.95rem !important;
         }
-
-        /* 4. ปรับขนาดการ์ดและฟอร์มกรอกข้อมูลให้กะทัดรัด */
         .saas-card, .review-card, [data-testid="stForm"] {
             padding: 20px !important;
             border-radius: 16px !important;
         }
-
-        /* 5. ปรับส่วนโลโก้ลูกค้าให้ตัดขึ้นบรรทัดใหม่เมื่อจอลอยแน่น */
         .logo-bar {
             gap: 16px !important;
             font-size: 0.9rem !important;
             flex-wrap: wrap !important;
         }
-
-        /* 6. ปรับ Footer ด้านล่างสุดให้เรียงเป็นแนวตั้งแทนแนวนอน */
         .footer-container {
             flex-direction: column !important;
             gap: 16px !important;
@@ -419,12 +411,12 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
-# 7. SERVICE CARDS (POS & APARTMENT)
+# 7. SERVICE CARDS (POS, APARTMENT & SLIP VERIFICATION)
 # -----------------------------------------------------------------------------
 st.markdown('<div id="services"></div>', unsafe_allow_html=True)
 st.subheader("💡 บริการระบบแอปยอดนิยม")
 
-c_pos, c_dorm = st.columns(2)
+c_pos, c_dorm, c_slip = st.columns(3)
 
 with c_pos:
     st.markdown("""
@@ -461,6 +453,24 @@ with c_dorm:
         </div>
     """, unsafe_allow_html=True)
     st.button("ทดลองใช้งาน Apartment", key="select_dorm")
+
+with c_slip:
+    st.markdown("""
+        <div class="saas-card">
+            <div style="font-size: 1.5rem; font-weight: 800; color: #0F172A;">🧾 Slip Verification</div>
+            <div style="color: #64748B; font-size: 0.875rem; margin-top: 4px; margin-bottom: 16px;">
+                เหมาะสำหรับ: ร้านค้าออนไลน์, เว็บแอป, ระบบสมาชิก
+            </div>
+            <div class="price-tag">299 ฿ <span>/ เดือน</span></div>
+            <hr style="border: none; border-top: 1px solid #F1F5F9; margin: 16px 0;">
+            <div class="feature-item"><span class="check-icon">✓</span> ตรวจสอบสลิปโอนเงินผ่าน API อัตโนมัติ</div>
+            <div class="feature-item"><span class="check-icon">✓</span> ป้องกันสลิปปลอม และสลิปซ้ำ 100%</div>
+            <div class="feature-item"><span class="check-icon">✓</span> รองรับการเชื่อมต่อ LINE OA Webhook</div>
+            <div class="feature-item"><span class="check-icon">✓</span> ออก API Key นำไปใช้งานได้ทันที</div>
+            <div class="feature-item"><span class="check-icon">✓</span> โควต้าสแกนสลิป 500 ครั้ง / เดือน</div>
+        </div>
+    """, unsafe_allow_html=True)
+    st.link_button("🚀 สมัครใช้งาน Slip System", "https://appslip-system-vdhb95p7wvksyzne5vbzec.streamlit.app/#b999", use_container_width=True)
 
 # -----------------------------------------------------------------------------
 # 8. FEATURES GRID
@@ -539,7 +549,7 @@ st.markdown('<div id="faq"></div>', unsafe_allow_html=True)
 st.subheader("❓ คำถามที่พบบ่อย (FAQ)")
 
 with st.expander("Q: สามารถทดลองใช้งานฟรีได้กี่วัน?"):
-    st.write("A: สามารถทดลองใช้งานได้ฟรี 30 วันเต็ม โดยไม่ต้องกรอกข้อมูลบัตรเครดิตครับ")
+    st.write("A: สามารถทดลองใช้งานได้ฟรี 30 วันเต็ม สำหรับระบบ POS และ Apartment โดยไม่ต้องกรอกข้อมูลบัตรเครดิตครับ")
 
 with st.expander("Q: สามารถยกเลิกการเช่าเมื่อไรก็ได้ใช่ไหม?"):
     st.write("A: ใช่ครับ ไม่มีสัญญาผูกมัดใดๆ คุณสามารถยกเลิกหรือเปลี่ยนแพ็กเกจได้ทุกเมื่อ")
@@ -556,7 +566,7 @@ with st.expander("Q: ข้อมูลภายในระบบมีคว�
 st.markdown("""
     <div style="background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%); border-radius: 24px; padding: 48px; color: white; text-align: center; margin-top: 48px;">
         <h2 style="color: white; font-weight: 800; margin-bottom: 8px;">พร้อมเริ่มใช้งานแล้วหรือยัง?</h2>
-        <p style="color: #93C5FD; font-size: 1.05rem; margin-bottom: 24px;">ทดลองใช้ฟรี 14 วัน ไม่ต้องใช้บัตรเครดิต</p>
+        <p style="color: #93C5FD; font-size: 1.05rem; margin-bottom: 24px;">เลือกแพ็กเกจที่ต้องการและเริ่มต้นใช้งานได้ทันที</p>
     </div>
     
     <div class="footer-container">
