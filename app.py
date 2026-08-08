@@ -470,7 +470,7 @@ with c_slip:
             <div class="feature-item"><span class="check-icon">✓</span> โควต้าสแกนสลิป 500 ครั้ง / เดือน</div>
         </div>
     """, unsafe_allow_html=True)
-    st.link_button("🚀 สมัครใช้งาน Slip System", "https://appslip-system-vdhb95p7wvksyzne5vbzec.streamlit.app/#b999", use_container_width=True)
+    st.link_button("🚀 สมัครใช้งาน Slip System", "https://appslip-system-cpi4shwt3baccyhefirqcs.streamlit.app/", use_container_width=True)
 
 # -----------------------------------------------------------------------------
 # 8. FEATURES GRID
