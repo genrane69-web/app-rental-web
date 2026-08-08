@@ -5,7 +5,7 @@ import requests
 # 1. ตั้งค่าหน้าเว็บ
 # -----------------------------------------------------------------------------
 st.set_page_config(
-    page_title="AppRental - ระบบเว็บแอปสำหรับธุรกิจ",
+    page_title="Appcentralweb - ระบบเว็บแอปสำหรับธุรกิจ",
     page_icon="🚀",
     layout="wide",
     initial_sidebar_state="collapsed"
@@ -329,7 +329,7 @@ st.markdown("""
 # -----------------------------------------------------------------------------
 st.markdown("""
     <div class="navbar">
-        <div class="navbar-brand">🚀 AppRental</div>
+        <div class="navbar-brand">🚀 Appcentralweb</div>
         <div class="navbar-menu">
             <a href="#services">บริการ</a>
             <a href="#pricing">ราคา</a>
@@ -346,7 +346,7 @@ st.markdown("""
 # -----------------------------------------------------------------------------
 st.markdown("""
     <div class="hero-container">
-        <div class="hero-title">AppRental<br>ระบบเว็บแอปสำหรับธุรกิจ</div>
+        <div class="hero-title">Appcentralweb<br>ระบบเว็บแอปสำหรับธุรกิจ</div>
         <div class="hero-subtitle">
             พร้อมใช้งานภายใน 5 นาที • ไม่ต้องซื้อขาด • ไม่ต้องดูแลเซิร์ฟเวอร์<br>
             ยกระดับการทำงานให้เป็นระบบและทันสมัย เริ่มต้นเพียง 159 บาท / เดือน
@@ -396,7 +396,7 @@ st.markdown("""
             <div class="dot dot-red"></div>
             <div class="dot dot-yellow"></div>
             <div class="dot dot-green"></div>
-            <span style="font-size: 0.8rem; color: #94A3B8; margin-left: 8px;">apprental.co/dashboard</span>
+            <span style="font-size: 0.8rem; color: #94A3B8; margin-left: 8px;">appcentralweb.co/dashboard</span>
         </div>
         <div style="background: #F8FAFC; border-radius: 12px; padding: 24px; border: 1px solid #F1F5F9;">
             <div style="display: flex; justify-content: space-between; margin-bottom: 16px;">
@@ -523,7 +523,7 @@ with r1:
         <div class="review-card">
             <div class="stars">★★★★★</div>
             <div style="color: #334155; font-size: 0.95rem; line-height: 1.6; margin-bottom: 12px;">
-                "ตั้งแต่เปลี่ยนมาใช้ระบบ POS ของ AppRental การเช็คสต็อกง่ายขึ้นมาก ประหยัดเวลาไปได้วันละหลายชั่วโมง ยอดขายโตขึ้นชัดเจนครับ"
+                "ตั้งแต่เปลี่ยนมาใช้ระบบ POS ของ Appcentralweb การเช็คสต็อกง่ายขึ้นมาก ประหยัดเวลาไปได้วันละหลายชั่วโมง ยอดขายโตขึ้นชัดเจนครับ"
             </div>
             <div style="font-weight: 700; color: #0F172A;">คุณสมชาย</div>
             <div style="font-size: 0.8rem; color: #64748B;">เจ้าของร้าน BaMiniMart</div>
@@ -571,12 +571,12 @@ st.markdown("""
     
     <div class="footer-container">
         <div>
-            <strong style="color: #0F172A;">AppRental</strong><br>
+            <strong style="color: #0F172A;">Appcentralweb</strong><br>
             บริการให้เช่าระบบเว็บแอปสำหรับธุรกิจ
         </div>
         <div>
             • LINE @222utxsg
-            ©2026 AppRental. All rights reserved.
+            ©2026 Appcentralweb. All rights reserved.
         </div>
     </div>
 """, unsafe_allow_html=True)
